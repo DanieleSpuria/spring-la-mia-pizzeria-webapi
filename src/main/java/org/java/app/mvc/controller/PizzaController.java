@@ -63,9 +63,9 @@ public class PizzaController {
 	@GetMapping("/{id}")
 	public String show(@PathVariable int id, Model model) {
 		
-		Pizza pizza = pizzaService.findById(id);
+		Optional<Pizza> optPizza = pizzaService.findById(id);
 		
-		model.addAttribute("pizza", pizza);
+		model.addAttribute("pizza", optPizza.get());
 		
 		return "show";
 	}	
@@ -104,7 +104,9 @@ public class PizzaController {
 			@PathVariable Integer id,
 			Model model) {
 		
-		model.addAttribute("pizza", pizzaService.findById(id));
+		Optional <Pizza> optPizza = pizzaService.findById(id);
+		
+		model.addAttribute("pizza", optPizza.get());
 		
 		return "create-update";
 	}
@@ -131,7 +133,7 @@ public class PizzaController {
 	public String delete(
 		@PathVariable Integer id) {
 
-			Pizza pizza = pizzaRepo.findById(id).get();
+			Optional <Pizza> optPizza = pizzaRepo.findById(id);
 			List <Offerta> offerte = offertaService.findAll();
 			List <Ingrediente> ingredienti = ingredienteServ.findAll();
 			
@@ -140,10 +142,10 @@ public class PizzaController {
 					offertaRepo.delete(offerta);
 			
 			for (Ingrediente ingrediente : ingredienti)
-				if (ingrediente.getPizze().contains(pizza))
-					ingrediente.getPizze().remove(pizza);
+				if (ingrediente.getPizze().contains(optPizza.get()))
+					ingrediente.getPizze().remove(optPizza.get());
 		
-			pizzaRepo.delete(pizza);
+			pizzaRepo.delete(optPizza.get());
 
 			return "redirect:/";
 		}
@@ -156,10 +158,10 @@ public class PizzaController {
 			@PathVariable("pizza_id") int id,
 			Model model) {
 		
-		Pizza pizza = pizzaService.findById(id);
+		Optional<Pizza> optPizza = pizzaService.findById(id);
 		Offerta offerta = new Offerta();
 		
-		model.addAttribute("pizza", pizza);
+		model.addAttribute("pizza", optPizza.get());
 		model.addAttribute("offerta", offerta);
 		
 		return "create-update-offerta";
@@ -173,15 +175,15 @@ public class PizzaController {
 			@PathVariable("pizza_id") int id,
 			Model model) {
 
-		Pizza pizza = pizzaService.findById(id);
+		Optional<Pizza> optPizza = pizzaService.findById(id);
 		
 		if (bindingResult.hasErrors()) {
 			
-			model.addAttribute("pizza", pizza);
+			model.addAttribute("pizza", optPizza.get());
 			return "create-update-offerta";
 		}
 		
-		offerta.setPizza(pizza);
+		offerta.setPizza(optPizza.get());
 		
 		offertaService.save(offerta);
 		
