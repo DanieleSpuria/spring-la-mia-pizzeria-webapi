@@ -15,7 +15,8 @@ public class AuthConfig {
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		
-		http.authorizeHttpRequests()
+		http.csrf().disable().authorizeHttpRequests()
+			.requestMatchers("/api/pizzeria/**").permitAll()
 			.requestMatchers("/create-update").hasAuthority("ADMIN")
 			.requestMatchers("/edit/**").hasAuthority("ADMIN")
 			.requestMatchers("/delete/**").hasAuthority("ADMIN")
