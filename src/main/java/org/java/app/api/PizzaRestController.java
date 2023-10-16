@@ -4,12 +4,17 @@ import java.util.List;
 import java.util.Optional;
 
 import org.java.app.api.dto.PizzaDto;
+import org.java.app.db.pojo.Ingrediente;
+import org.java.app.db.pojo.Offerta;
 import org.java.app.db.pojo.Pizza;
+import org.java.app.db.serv.IngredienteService;
+import org.java.app.db.serv.OffertaService;
 import org.java.app.db.serv.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +30,12 @@ public class PizzaRestController {
 
 	@Autowired
 	private PizzaService pizzaServ;
+	
+	@Autowired
+	private IngredienteService ingredienteServ;
+	
+	@Autowired 
+	private OffertaService offertaServ;
 	
 	
 	
@@ -95,5 +106,35 @@ public class PizzaRestController {
 			
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	
+	
+	
+	@DeleteMapping("{id}")
+	public ResponseEntity<String> delete(
+				@PathVariable int id
+			) {
+		
+			Optional<Pizza> optPizza = pizzaServ.findById(id);
+			
+			if (optPizza.isEmpty())
+				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			
+			List <Offerta> offerte = offertaServ.findAll();
+			List <Ingrediente> ingredienti = ingredienteServ.findAll();
+	
+			for (Offerta offerta : offerte) 			
+				if (offerta.getPizza().getId() == id) 
+					offertaServ.deleteOfferta(offerta);
+			
+			for (Ingrediente ingrediente : ingredienti)
+				if (ingrediente.getPizze().contains(optPizza.get()))
+					ingrediente.getPizze().remove(optPizza.get());
+			
+			Pizza pizza = optPizza.get();
+			pizzaServ.deletePizza(pizza);
+			
+			return new ResponseEntity<String>("Pizza eliminata.", HttpStatus.OK);
 	}
 }
