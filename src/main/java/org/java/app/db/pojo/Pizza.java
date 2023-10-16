@@ -41,7 +41,7 @@ public class Pizza {
 	private List<Offerta> offerte;
 	
 	@ManyToMany(mappedBy = "pizze")
-	@JsonBackReference
+	@JsonManagedReference
 	private List<Ingrediente> ingredienti;
 	
 	public Pizza() {}

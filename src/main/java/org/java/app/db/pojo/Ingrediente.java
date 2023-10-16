@@ -3,6 +3,8 @@ package org.java.app.db.pojo;
 import java.util.Arrays;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,6 +23,7 @@ public class Ingrediente {
 	private String nome;
 	
 	@ManyToMany
+	@JsonBackReference
 	private List<Pizza> pizze;
 	
 	
