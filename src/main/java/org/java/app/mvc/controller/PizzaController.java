@@ -91,7 +91,7 @@ public class PizzaController {
 		if (bindingResult.hasErrors()) 
 			return "create-update";
 		
-		pizzaRepo.save(formPizza);
+		pizzaService.save(formPizza);
 		
 		return "redirect:/";
 	}
@@ -145,7 +145,7 @@ public class PizzaController {
 				if (ingrediente.getPizze().contains(optPizza.get()))
 					ingrediente.getPizze().remove(optPizza.get());
 		
-			pizzaRepo.delete(optPizza.get());
+			pizzaService.deletePizza(optPizza.get());
 
 			return "redirect:/";
 		}

@@ -121,6 +121,7 @@ public class PizzaRestController {
 			if (optPizza.isEmpty())
 				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 			
+			Pizza pizza = optPizza.get();	
 			List <Offerta> offerte = offertaServ.findAll();
 			List <Ingrediente> ingredienti = ingredienteServ.findAll();
 	
@@ -129,12 +130,11 @@ public class PizzaRestController {
 					offertaServ.deleteOfferta(offerta);
 			
 			for (Ingrediente ingrediente : ingredienti)
-				if (ingrediente.getPizze().contains(optPizza.get()))
-					ingrediente.getPizze().remove(optPizza.get());
+				if (ingrediente.getPizze().contains(pizza))
+					ingrediente.getPizze().remove(pizza);
 			
-			Pizza pizza = optPizza.get();
 			pizzaServ.deletePizza(pizza);
 			
-			return new ResponseEntity<String>("Pizza eliminata.", HttpStatus.OK);
+			return new ResponseEntity<String>("Pizza " + id + " eliminata.", HttpStatus.OK);
 	}
 }
