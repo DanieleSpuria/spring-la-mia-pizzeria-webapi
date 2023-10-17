@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../components/Home.vue';
-import Form from '../components/Form.vue';
+import FormPizza from '../components/FormPizza.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -11,9 +11,9 @@ const router = createRouter({
       component: Home
     },
     {
-      path: '/form',
-      name: 'form',
-      component: Form
+      path: '/new-pizza',
+      name: 'newPizza',
+      component: FormPizza
     }
   ]
 })

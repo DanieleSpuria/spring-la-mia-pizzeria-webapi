@@ -30,8 +30,8 @@
   const pizze = ref(null);
 
   function getPizze() {
-    axios.get(apiPizzeria).then(res => {
-            const data = res.data;
+    axios.get(apiPizzeria).then(result => {
+            const data = result.data;  
             pizze.value = data;
           })
   }
