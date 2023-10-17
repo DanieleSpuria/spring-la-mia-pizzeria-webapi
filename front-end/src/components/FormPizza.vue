@@ -36,7 +36,7 @@
 
 <script setup>
 
-  import { ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import axios from 'axios';
 
   const apiPizzeria = "http://localhost:8080/api/pizzeria";
@@ -47,8 +47,6 @@
     foto: ''
   }
   const newPizza = ref({...emptyPizza});
-
-  console.log(newPizza.value);
 
   function postPizza() {
     axios.post(apiPizzeria, newPizza.value).then(result => {

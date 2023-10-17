@@ -11,8 +11,8 @@ const router = createRouter({
       component: Home
     },
     {
-      path: '/new-pizza',
-      name: 'newPizza',
+      path: '/form-pizza',
+      name: 'formPizza',
       component: FormPizza
     }
   ]

@@ -10,7 +10,9 @@
         :key="pizza.id"
         class="my-2"
       >
-        {{ pizza.nome }}
+        <span>{{ pizza.nome }}</span>
+        <router-link :to="{ name: 'formPizza'}" class="mx-2">Modifica</router-link>
+        <button @click="deletePizza(pizza.id)">Elimina</button>
       </li>
     </ul>
 
@@ -31,9 +33,15 @@
 
   function getPizze() {
     axios.get(apiPizzeria).then(result => {
-            const data = result.data;  
-            pizze.value = data;
-          })
+      const data = result.data;  
+      pizze.value = data;
+    })
+  }
+
+  function deletePizza(id) {
+    axios.delete(apiPizzeria + "/" + id).then(result => {
+      getPizze()
+    })
   }
 
   onMounted(() => {
