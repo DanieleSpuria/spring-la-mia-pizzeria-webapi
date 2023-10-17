@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../components/Home.vue';
-import FormPizza from '../components/FormPizza.vue';
+import NewPizza from '../components/NewPizza.vue';
+import EditPizza from '../components/EditPizza.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -11,9 +12,15 @@ const router = createRouter({
       component: Home
     },
     {
-      path: '/form-pizza',
-      name: 'formPizza',
-      component: FormPizza
+      path: '/new-pizza',
+      name: 'newPizza',
+      component: NewPizza
+    },
+    {
+      path: '/edit-pizza/:id/:nome/:prezzo/:descrizione/:foto',
+      name: 'editPizza',
+      component: EditPizza,
+      props: true
     }
   ]
 })

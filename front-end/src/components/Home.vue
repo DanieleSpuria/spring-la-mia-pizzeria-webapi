@@ -11,7 +11,10 @@
         class="my-2"
       >
         <span>{{ pizza.nome }}</span>
-        <router-link :to="{ name: 'formPizza'}" class="mx-2">Modifica</router-link>
+        <router-link
+          :to="{ name: 'editPizza', params: {id: pizza.id, nome: pizza.nome, prezzo: pizza.prezzo, descrizione: pizza.descrizione, foto: pizza.foto}}"
+          class="mx-2"
+        >Modifica</router-link>
         <button @click="deletePizza(pizza.id)">Elimina</button>
       </li>
     </ul>
@@ -49,10 +52,3 @@
   }) 
 
 </script>
-
-
-
-
-<style>
-
-</style>

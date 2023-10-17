@@ -36,10 +36,14 @@
 
 <script setup>
 
-  import { onMounted, ref } from 'vue';
+  import { defineProps, ref } from 'vue';
   import axios from 'axios';
+  import { router } from '../router/router';
+
+  const props = defineProps(['nome', 'prezzo', 'descrizione', 'foto'])
 
   const apiPizzeria = "http://localhost:8080/api/pizzeria";
+  
   const emptyPizza = {
     nome: '',
     prezzo: '',
@@ -51,6 +55,7 @@
   function postPizza() {
     axios.post(apiPizzeria, newPizza.value).then(result => {
       console.log(result.data);
+      router.push({ name: 'home' });
     }).catch(error => {
       console.log(error);
     })
