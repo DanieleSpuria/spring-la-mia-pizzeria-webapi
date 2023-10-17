@@ -1,7 +1,7 @@
 <template>
 
   <form
-    class="w-50"
+    class="d-flex flex-column align-items-center border border-dark rounded p-3"
     @submit.prevent="putPizza(pizza.id)"
   >
 
@@ -12,7 +12,7 @@
 
     <div class="mb-4">
       <label for="prezzo" class="form-label">Prezzo</label>
-      <input type="number" id="prezzo" name="prezzo" class="form-control" v-model="pizza.prezzo">
+      <input type="number" step="0.01" id="prezzo" name="prezzo" class="form-control" v-model="pizza.prezzo">
     </div>
 
     <div class="mb-4">
@@ -25,7 +25,7 @@
       <input type="text" id="foto" name="foto" class="form-control" v-model="pizza.foto">
     </div>
 
-    <input type="submit" value="Invia">
+    <input type="submit" value="Invia" class="btn btn-primary">
 
   </form>
   
